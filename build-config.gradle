@@ -1,0 +1,10 @@
+afterEvaluate {
+    android.applicationVariants.all { variant ->
+        def outDir = new File(buildDir, "generated/source/buildConfig/$variant.name/")
+        tasks.register("generate${variant.name.capitalize()}Configuration", GenerateConfiguration) {
+            configFile = new File(rootDir, ".env")
+            outputDir = outDir
+        }
+        variant.registerJavaGeneratingTask(tasks.named("generate${variant.name.capitalize()}Configuration"), outDir)
+    }
+}
